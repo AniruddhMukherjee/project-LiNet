@@ -1,0 +1,21 @@
+
+
+<a href="/">
+    <div class="photo">
+        <input type="button" value="HOME">
+</div>
+</a>
+<br>
+<form method="GET" action="{% url 'home' %}">
+    <input type="text" name="q" placeholder="Search Products..."/>
+</form>
+
+<br>
+
+{% if request.user.is_authenticated %}
+<p>Hello {{request.user}}</p>
+<a href="{% url 'logout' %}"> <input type="button" value="Logout"> </a>
+{% else %}
+<a href="{% url 'login' %}"> <input type="button" value="Login"> </a>
+{% endif %}
+<hr>

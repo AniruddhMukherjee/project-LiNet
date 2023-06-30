@@ -1,0 +1,62 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+<style>
+    .home-container{
+        display: grid;
+        grid-template-columns:1fr 2fr 1fr;
+        gap:10px;
+</style>
+
+
+<div class="home-container">
+
+    <div style="text-align: center;">
+        <h3>Browse Products</h3>
+        <hr>
+
+        <div>
+            <a href="{% url 'home' %}"> <input type="button" value="all"> </a>
+        </div>
+
+        {% for topic in topics%}
+            <div>
+                <a href="{% url 'home' %}?q={{topic.name}}">{{topic.name}}</a>
+            </div>
+        {% endfor %}
+    </div>
+
+
+
+    <div style="text-align: center;">
+        <h1>BUY</h1>
+        <h5>Total Products {{product_count}}</h5>
+        <a href="{% url 'new-product' %}"><input type="button" value="NEW PRODUCT"></a>
+            <div>
+
+                {% for product in products %}
+                {% for user in users %}
+                    {% if request.user == product.user %}
+                        <a href="{% url 'user-profile' user.id %}">@{{user.user}}</a>
+                    {% endif %}
+                {% endfor %}
+                    <div style="border: 2px black solid; margin: 10px 0px; padding:5px;">
+                        <h4>Product --  <a href="{% url 'product' product.id %}">{{product.name}}</a></h4>
+                         {% if request.user == product.user %}
+                        <a href="{% url 'update-product' product.id %}"><input type="button" value="EDIT"></a>
+                        <a href="{% url 'delete-product' product.id %}"><input type="button" value="DELETE"></a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+    </div>
+
+    <div style="text-align: center;">
+        <h3>Browse announcements</h3>
+        <hr>
+        <p>Coming Soon!</p>
+    </div>
+</div>
+
+{% endblock %}
